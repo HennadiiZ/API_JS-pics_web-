@@ -36,8 +36,11 @@ function generatePictures(data){
     const galleryImg = document.createElement('div');
     galleryImg.classList.add('gallery-img');
     galleryImg.innerHTML = `
+    <div class="gallery-info">
+      <p>${photo.photographer}</p>
+      <a href=${photo.src.original}>Download</a>
+    </div>
     <img src=${photo.src.large}></img>
-    <p>${photo.photographer}</p>
     `;
     gallery.append(galleryImg);
   });
@@ -54,12 +57,23 @@ curatedPhotos();
 
 //-2
 async function searchPhotos(query){
+  clear();
   const data = await fetchApi(
     `https://api.pexels.com/v1/search?query=${query}+query&per_page=1`
   );
   generatePictures(data);
 }
 // searchPhotos(query)
+
+// cleared
+function clear(){
+    gallery.innerHTML = '';
+}
+
+
+
+
+
 
 // refactoring =================================================================
 // const auth = "563492ad6f917000010000015b13eef540a24bde9cb605b7aa59d050";
