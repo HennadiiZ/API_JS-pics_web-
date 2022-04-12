@@ -1,0 +1,43 @@
+@import "nullStyle.scss";
+
+
+body{
+    background-color: grey;
+}
+
+// $fz:50px;
+// $color: yellow;
+// %tplborder{
+//     border-bottom: 5px dashed red;
+//     border-top: 1px solid black;
+// }
+
+// .link{
+//     color: $color;
+//     font-size: $fz;
+//     &:hover{
+//         color: orange;
+//     }
+//     @extend %tplborder;
+// }
+
+// @mixin fontz($f, $c){
+//     font-size: $f;
+//     color: $c;
+// }
+// .link-2{
+//     @include fontz(80px, green)
+// }
+// .link-3{
+//     @include fontz(100px, rgb(0, 66, 128))
+// }
+
+// button{
+//     color: $color;
+//     background-color:black;
+//     font-size: $fz;
+// }  
+
+
+
+ 
