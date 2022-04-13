@@ -5,6 +5,9 @@ const gallery = document.querySelector('.gallery');
 const searchInput = document.querySelector('.search-input');
 const form = document.querySelector('.search-form');
 let searchValue;
+let page = 1;
+let fetchLink;
+let currentSearch;
 
 searchInput.addEventListener('input', updateInput);
 function updateInput(e){
@@ -13,6 +16,7 @@ function updateInput(e){
 
 form.addEventListener('submit', (e)=>{
   e.preventDefault();
+  currentSearch = searchValue
   searchPhotos(searchValue);
   form.reset();
 });
@@ -48,8 +52,11 @@ function generatePictures(data){
 
 //-1
 async function curatedPhotos(){
+  fetchLink =  `https://api.pexels.com/v1/curated?per_page=15&page=1`;
   const data = await fetchApi(
-    "https://api.pexels.com/v1/curated?per_page=15&page=1"
+    // "https://api.pexels.com/v1/curated?per_page=15&page=1"
+    // `https://api.pexels.com/v1/curated?per_page=15&page=${page}`
+    fetchLink
   );
   generatePictures(data);
 }
@@ -58,8 +65,11 @@ curatedPhotos();
 //-2
 async function searchPhotos(query){
   clear();
+  fetchLink = `https://api.pexels.com/v1/search?query=${query}+query&per_page=1`;
   const data = await fetchApi(
-    `https://api.pexels.com/v1/search?query=${query}+query&per_page=1`
+    // `https://api.pexels.com/v1/search?query=${query}+query&per_page=1`
+    // `https://api.pexels.com/v1/search?query=${query}+query&per_page=${page}`
+    fetchLink
   );
   generatePictures(data);
 }
@@ -70,8 +80,22 @@ function clear(){
     gallery.innerHTML = '';
 }
 
+// 
+const more = document.querySelector('.more');
+more.addEventListener('click', loadMore);
 
-
+async function loadMore(){
+    page++;
+    // curatedPhotos();
+    // searchPhotos(searchValue);
+    if(currentSearch){
+      fetchLink = `https://api.pexels.com/v1/search?query=${currentSearch}+query&per_page=${page}`;
+    }else{
+      fetchLink =  `https://api.pexels.com/v1/curated?per_page=15&page=${page}`;
+    }
+    const data = await fetchApi(fetchLink);
+    generatePictures(data);
+}
 
 
 
